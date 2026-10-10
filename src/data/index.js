@@ -7,6 +7,9 @@ import hedgehog from './crafts/hedgehog.js'
 import snail from './crafts/snail.js'
 import tank from './crafts/tank.js'
 import weather from './crafts/weather.js'
+import jumpingJack from './crafts/jumping-jack.js'
+import popupHouse from './crafts/popup-house.js'
+import balloonCar from './crafts/balloon-car.js'
 
 export const techniques = {
   origami: { name: 'Оригами', icon: '🦢', color: '#4d9de0' },
@@ -21,7 +24,7 @@ export const difficulties = {
   3: 'Сложно',
 }
 
-export const crafts = [dog, cup, tulip, whale, lantern, hedgehog, snail, tank, weather]
+export const crafts = [dog, cup, tulip, whale, lantern, hedgehog, snail, tank, weather, jumpingJack, popupHouse, balloonCar]
 
 export function getCraft(id) {
   return crafts.find((c) => c.id === id)

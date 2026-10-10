@@ -1,5 +1,5 @@
 import { svg, arrow, emoji, outlined, INK } from '../../diagrams/kit.js'
-import { page } from '../../diagrams/net.js'
+import { page, thumbnail } from '../../diagrams/net.js'
 
 // Все размеры — в миллиметрах. Основа — лист А4 (297×210), за ней два круга,
 // которые выступают за края листа: за эти края их и вращают.
@@ -235,11 +235,6 @@ function assemble() {
   )
 }
 
-const sheetIcon = (x, y, wpx, inner) => {
-  const h = (wpx * 210) / 297
-  return `<rect x="${x + 3}" y="${y + 3}" width="${wpx}" height="${h}" fill="#e7dccd"/>` + inner.replace('width="297mm" height="210mm"', `x="${x}" y="${y}" width="${wpx}" height="${h}"`)
-}
-
 // --- Шаблон для печати ---
 
 const TPL_W = 0.4
@@ -259,14 +254,14 @@ const sheetCard =
   `</svg>`
 
 const sheetWheels = page(
-  'Календарь погоды · лист 2 из 3 · круги (резать по сплошной линии, рисунки клеить между синими дугами)',
+  { title: 'Календарь погоды · лист 2 из 3 · круги (резать по сплошной линии, рисунки клеить между синими дугами)', legend: ['cut'] },
   wheel([78, 105], WEATHER, TPL_W, { template: true, win: WEATHER_WIN }),
   wheel([219, 105], SEASONS, TPL_W, { template: true, win: SEASON_WIN }),
 )
 
 const stencilIcons = icons(TPL_W / 1.1, true)
 const sheetStencils = page(
-  'Календарь погоды · лист 3 из 3 · трафареты: вырежи, обведи на цветной бумаге и вырежи ещё раз',
+  { title: 'Календарь погоды · лист 3 из 3 · трафареты: вырежи, обведи на цветной бумаге и вырежи ещё раз', legend: ['cut'] },
   ...[...WEATHER, ...SEASONS].map((it, i) => {
     const col = i % 5
     const row = Math.floor(i / 5)
@@ -306,7 +301,7 @@ export default {
     {
       text: 'Распечатай три листа шаблона: основу — на цветном картоне, круги — на белом картоне, трафареты — на обычной бумаге.',
       tip: 'Масштаб печати 100%. Если принтер не берёт картон, распечатайте на бумаге и наклейте на картон.',
-      svg: svg(sheetIcon(14, 30, 150, sheetCard), sheetIcon(136, 112, 150, sheetWheels), sheetIcon(40, 190, 150, sheetStencils)),
+      svg: svg(thumbnail(14, 30, 150, sheetCard), thumbnail(136, 112, 150, sheetWheels), thumbnail(40, 190, 150, sheetStencils)),
     },
     {
       text: 'Вырежи оба круга по сплошной линии.',

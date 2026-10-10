@@ -85,6 +85,18 @@ export function cylinderX(cy, cz, r, x0, x1, sides = 18) {
   ])
 }
 
+/** Цилиндр вдоль оси z (колесо, ось-трубочка). */
+export function cylinderZ(cx, cy, r, z0, z1, sides = 24) {
+  return prismZ(
+    Array.from({ length: sides }, (_, i) => {
+      const t = (i / sides) * 2 * Math.PI
+      return [cx + r * Math.cos(t), cy + r * Math.sin(t)]
+    }),
+    z0,
+    z1,
+  ).map((f) => (f.id.startsWith('side') ? { ...f, smooth: true } : f))
+}
+
 /** Цилиндр вдоль оси y (кольцо-погон). */
 export function cylinderY(cx, cz, r, y0, y1, sides = 24) {
   return prismY(
@@ -109,6 +121,7 @@ export function view({ ox = 150, oy = 200, scale = 2 } = {}) {
 
   return {
     project,
+    scale,
 
     /**
      * Рисует тело. open — id грани, которую не рисуем (коробка без крышки):

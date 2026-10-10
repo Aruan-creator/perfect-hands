@@ -1,6 +1,6 @@
 import { svg, arrow, emoji, label, path, line, INK } from '../../diagrams/kit.js'
 import { prismZ, prismY, cylinderX, cylinderY, moved, view } from '../../diagrams/solid.js'
-import { page, band, plate, strip, cutLine, edgeLengths } from '../../diagrams/net.js'
+import { page, band, plate, strip, cutLine, edgeLengths, thumbnail } from '../../diagrams/net.js'
 
 // Все размеры — в миллиметрах. Одни и те же числа идут и в схемы, и в шаблон для печати,
 // поэтому развёртка гарантированно совпадает с тем, что нарисовано на схемах.
@@ -58,11 +58,6 @@ function tank({ withTurret = true } = {}) {
 const p = (pt) => V.project(pt)
 
 // --- Схемы шагов ---
-
-const sheetIcon = (x, y, w, inner) => {
-  const h = (w * 210) / 297
-  return `<rect x="${x + 3}" y="${y + 3}" width="${w}" height="${h}" fill="#e7dccd"/>` + inner.replace('width="297mm" height="210mm"', `x="${x}" y="${y}" width="${w}" height="${h}"`)
-}
 
 function trackExploded(v) {
   const plateFront = TRACK.map(([x, y]) => [x, y, -26])
@@ -225,7 +220,7 @@ export default {
     {
       text: 'Распечатай шаблон на двух листах. Если хочешь раскрасить танк, сделай это сейчас, пока детали плоские.',
       tip: 'При печати выберите масштаб 100% (не «по размеру страницы»), иначе кольца башни не подойдут друг к другу.',
-      svg: svg(sheetIcon(18, 45, 170, sheet1), sheetIcon(112, 160, 170, sheet2), emoji(250, 70, '🖨️', 48)),
+      svg: svg(thumbnail(18, 45, 170, sheet1), thumbnail(112, 160, 170, sheet2), emoji(250, 70, '🖨️', 48)),
     },
     {
       text: 'Вырежи все детали по сплошной линии. Потом приложи линейку и продави стержнем все пунктирные линии.',
